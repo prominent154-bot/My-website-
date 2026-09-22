@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Free Fire Store</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: Arial, sans-serif;
+    }
+
+    body {
+      background: #0b0b12;
+      color: white;
+    }
+
+    header {
+      background: linear-gradient(135deg, #ff4500, #ff0066);
+      padding: 22px 18px;
+      text-align: center;
+    }
+
+    header h1 {
+      font-size: 28px;
+      margin-bottom: 6px;
+    }
+
+    header p {
+      opacity: 0.9;
+    }
+
+    .hero {
+      padding: 35px 20px;
+      text-align: center;
+      background: linear-gradient(180deg, #171725, #0b0b12);
+    }
+
+    .hero h2 {
+      font-size: 30px;
+      margin-bottom: 10px;
+    }
+
+    .hero span {
+      color: #ff4d00;
+    }
+
+    .hero p {
+      color: #bbb;
+      margin-bottom: 20px;
+    }
+
+    .shop {
+      padding: 20px;
+      max-width: 900px;
+      margin: auto;
+    }
+
+    .shop h2 {
+      margin-bottom: 20px;
+    }
+
+    .products {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 18px;
+    }
+
+    .card {
+      background: #171722;
+      border: 1px solid #29293a;
+      border-radius: 15px;
+      padding: 18px;
+      text-align: center;
+      box-shadow: 0 5px 20px rgba(0,0,0,0.3);
+    }
+
+    .card .icon {
+      font-size: 55px;
+      margin-bottom: 12px;
+    }
+
+    .card h3 {
+      margin-bottom: 8px;
+    }
+
+    .card p {
+      color: #aaa;
+      font-size: 14px;
+      margin-bottom: 15px;
+    }
+
+    .price {
+      color: #00ff88;
+      font-size: 20px;
+      font-weight: bold;
+      margin-bottom: 15px;
+    }
+
+    button {
+      width: 100%;
+      border: none;
+      border-radius: 10px;
+      padding: 13px;
+      background: linear-gradient(135deg, #ff4500, #ff0066);
+      color: white;
+      font-weight: bold;
+      font-size: 15px;
+      cursor: pointer;
+    }
+
+    button:active {
+      transform: scale(0.97);
+    }
+
+    .cart {
+      margin-top: 30px;
+      background: #171722;
+      border-radius: 15px;
+      padding: 20px;
+      border: 1px solid #29293a;
+    }
+
+    #cartItems {
+      margin: 15px 0;
+      color: #ccc;
+    }
+
+    .total {
+      font-size: 20px;
+      font-weight: bold;
+      margin-bottom: 15px;
+    }
+
+    footer {
+      text-align: center;
+      padding: 30px 15px;
+      color: #777;
+      font-size: 13px;
+    }
+  </style>
+</head>
+
+<body>
+
+  <header>
+    <h1>🔥 FREE FIRE STORE</h1>
+    <p>Bundles • Diamonds • Exclusive Items</p>
+  </header>
+
+  <section class="hero">
+    <h2>Welcome to the <span>Battle Store</span></h2>
+    <p>Find your favorite Free Fire items in one place.</p>
+  </section>
+
+  <section class="shop">
+    <h2>🛒 Featured Items</h2>
+
+    <div class="products">
+
+      <div class="card">
+        <div class="icon">🥷</div>
+        <h3>Naruto Bundle</h3>
+        <p>Exclusive Naruto-themed bundle.</p>
+        <div class="price">₦15,000</div>
+        <button onclick="addToCart('Naruto Bundle', 15000)">
+          Add to Cart
+        </button>
+      </div>
+
+      <div class="card">
+        <div class="icon">💎</div>
+        <h3>5,600 Diamonds</h3>
+        <p>Free Fire diamond package.</p>
+        <div class="price">₦50,000</div>
+        <button onclick="addToCart('5,600 Diamonds', 50000)">
+          Add to Cart
+        </button>
+      </div>
+
+      <div class="card">
+        <div class="icon">⚔️</div>
+        <h3>Elite Bundle</h3>
+        <p>Special battle bundle.</p>
+        <div class="price">₦12,000</div>
+        <button onclick="addToCart('Elite Bundle', 12000)">
+          Add to Cart
+        </button>
+      </div>
+
+    </div>
+
+    <div class="cart">
+      <h2>🛍️ Your Cart</h2>
+
+      <div id="cartItems">
+        Your cart is empty.
+      </div>
+
+      <div class="total">
+        Total: ₦<span id="total">0</span>
+      </div>
+
+      <button onclick="checkout()">
+        Checkout
+      </button>
+    </div>
+
+  </section>
+
+  <footer>
+    © 2026 Free Fire Store
+  </footer>
+
+  <script>
+    let cart = [];
+    let total = 0;
+
+    function addToCart(name, price) {
+      cart.push({ name, price });
+      total += price;
+
+      updateCart();
+
+      alert(name + " added to cart!");
+    }
+
+    function updateCart() {
+      const cartItems = document.getElementById("cartItems");
+      const totalElement = document.getElementById("total");
+
+      if (cart.length === 0) {
+        cartItems.innerHTML = "Your cart is empty.";
+      } else {
+        cartItems.innerHTML = cart.map((item, index) =>
+          `<div style="margin-bottom:8px;">
+            ${index + 1}. ${item.name} — ₦${item.price.toLocaleString()}
+          </div>`
+        ).join("");
+      }
+
+      totalElement.textContent = total.toLocaleString();
+    }
+
+    function checkout() {
+      if (cart.length === 0) {
+        alert("Your cart is empty.");
+        return;
+      }
+
+      alert(
+        "Checkout system coming next!\\n\\n" +
+        "Total: ₦" + total.toLocaleString()
+      );
+    }
+  </script>
+
+</body>
+  </html>
